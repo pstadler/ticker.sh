@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e
 
+LANG=en_US.UTF-8
+
 SYMBOLS=("$@")
 
 if ! $(type jq > /dev/null 2>&1); then
