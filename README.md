@@ -21,14 +21,14 @@ Make sure to install [jq](https://stedolan.github.io/jq/), a versatile command-l
 $ ./ticker.sh AAPL
 
 # Multiple symbols:
-$ ./ticker.sh AAPL MSFT GOOG BTCUSD=X
+$ ./ticker.sh AAPL MSFT GOOG BTC-USD
 
 # Read from file:
-$ echo "AAPL MSFT GOOG BTCUSD=X" > ~/.ticker.conf
+$ echo "AAPL MSFT GOOG BTC-USD" > ~/.ticker.conf
 $ ./ticker.sh $(cat ~/.ticker.conf)
 
 # Update every five seconds:
-$ while true; do clear; ./ticker.sh AAPL MSFT GOOG BTCUSD=X; sleep 5; done
+$ while true; do clear; ./ticker.sh AAPL MSFT GOOG BTC-USD; sleep 5; done
 ```
 
 This script works well with [GeekTool](https://www.tynsoe.org/v2/geektool/) and similar software.

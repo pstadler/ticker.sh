@@ -11,7 +11,7 @@ if ! $(type jq > /dev/null 2>&1); then
 fi
 
 if [ -z "$SYMBOLS" ]; then
-  echo "Usage: ./ticker.sh AAPL MSFT GOOG BTCUSD=X"
+  echo "Usage: ./ticker.sh AAPL MSFT GOOG BTC-USD"
   exit
 fi
 
