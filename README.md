@@ -34,8 +34,8 @@ $ while true; do clear; ./ticker.sh AAPL MSFT GOOG BTC-USD; sleep 5; done
 This script works well with [GeekTool](https://www.tynsoe.org/v2/geektool/) and similar software:
 
 ```sh
-# GeekTool example script
-#!/bin/sh
+# GeekTool example script:
+
 PATH=/usr/local/bin:$PATH # make sure to include the path where jq is located
 ~/GitHub/ticker.sh/ticker.sh AAPL MSFT GOOG BTC-USD
 ```
