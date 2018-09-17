@@ -38,4 +38,10 @@ This script works well with [GeekTool](https://www.tynsoe.org/v2/geektool/) and 
 
 PATH=/usr/local/bin:$PATH # make sure to include the path where jq is located
 ~/GitHub/ticker.sh/ticker.sh AAPL MSFT GOOG BTC-USD
-```
+``**
+
+
+** Change
+
++ Sept 16, 2018 - case insenstive.
++ Sept 16, 2018 - add `watch` for ticker.sh as `ticker` command.  Result update every 30s.

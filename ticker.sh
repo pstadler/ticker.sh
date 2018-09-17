@@ -35,6 +35,7 @@ query () {
 }
 
 for symbol in $(IFS=' '; echo "${SYMBOLS[*]}"); do
+  symbol=$(echo "$symbol" | tr '[:lower:]' '[:upper:]')
   if [ -z "$(query $symbol 'marketState')" ]; then
     printf 'No results for symbol "%s"\n' $symbol
     continue
