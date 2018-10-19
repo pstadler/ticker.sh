@@ -2,6 +2,7 @@
 set -e
 
 LANG=en_US.UTF-8
+LC_NUMERIC=en_US.UTF-8
 
 SYMBOLS=("$@")
 
