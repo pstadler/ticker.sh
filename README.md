@@ -28,6 +28,8 @@ $ echo "AAPL MSFT GOOG BTC-USD" > ~/.ticker.conf
 $ ./ticker.sh $(cat ~/.ticker.conf)
 
 # Update every five seconds:
+$ watch -n 5 -t -c ./ticker.sh AAPL MSFT GOOG BTC-USD
+# Or if `watch` is not available:
 $ while true; do clear; ./ticker.sh AAPL MSFT GOOG BTC-USD; sleep 5; done
 ```
 
