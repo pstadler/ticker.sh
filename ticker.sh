@@ -4,7 +4,7 @@ set -e
 LANG=en_US.UTF-8
 LC_NUMERIC=en_US.UTF-8
 
-SYMBOLS=("$@")
+SYMBOLS=(${@^^})
 
 if ! $(type jq > /dev/null 2>&1); then
   echo "'jq' is not in the PATH. (See: https://stedolan.github.io/jq/)"
