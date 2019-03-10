@@ -32,28 +32,33 @@ results=$(curl --silent "$API_ENDPOINT&fields=$fields&symbols=$symbols" \
   | jq '.quoteResponse .result')
 
 query () {
-  echo $results | jq -r ".[] | select (.symbol == \"$1\") | .$2"
+  echo $results | jq -r ".[] | select(.symbol == \"$1\") | .$2"
 }
 
 for symbol in $(IFS=' '; echo "${SYMBOLS[*]}"); do
-  if [ -z "$(query $symbol 'marketState')" ]; then
+  marketState="$(query $symbol 'marketState')"
+
+  if [ -z $marketState ]; then
     printf 'No results for symbol "%s"\n' $symbol
     continue
   fi
 
-  if [ $(query $symbol 'marketState') == "PRE" ] \
-    && [ "$(query $symbol 'preMarketChange')" != "0" ] \
-    && [ "$(query $symbol 'preMarketChange')" != "null" ]; then
+  preMarketChange="$(query $symbol 'preMarketChange')"
+  postMarketChange="$(query $symbol 'postMarketChange')"
+
+  if [ $marketState == "PRE" ] \
+    && [ $preMarketChange != "0" ] \
+    && [ $preMarketChange != "null" ]; then
     nonRegularMarketSign='*'
     price=$(query $symbol 'preMarketPrice')
-    diff=$(query $symbol 'preMarketChange')
+    diff=$preMarketChange
     percent=$(query $symbol 'preMarketChangePercent')
-  elif [ $(query $symbol 'marketState') != "REGULAR" ] \
-    && [ "$(query $symbol 'postMarketChange')" != "0" ] \
-    && [ "$(query $symbol 'postMarketChange')" != "null" ]; then
+  elif [ $marketState != "REGULAR" ] \
+    && [ $postMarketChange != "0" ] \
+    && [ $postMarketChange != "null" ]; then
     nonRegularMarketSign='*'
     price=$(query $symbol 'postMarketPrice')
-    diff=$(query $symbol 'postMarketChange')
+    diff=$postMarketChange
     percent=$(query $symbol 'postMarketChangePercent')
   else
     nonRegularMarketSign=''
