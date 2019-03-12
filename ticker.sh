@@ -36,6 +36,9 @@ query () {
 }
 
 for symbol in $(IFS=' '; echo "${SYMBOLS[*]}"); do
+  if $(type tr > /dev/null 2>&1); then
+    symbol=$(echo $symbol | tr 'a-z' 'A-Z')
+  fi
   marketState="$(query $symbol 'marketState')"
 
   if [ -z $marketState ]; then
