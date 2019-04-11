@@ -20,10 +20,12 @@ FIELDS=(symbol marketState regularMarketPrice regularMarketChange regularMarketC
   preMarketPrice preMarketChange preMarketChangePercent postMarketPrice postMarketChange postMarketChangePercent)
 API_ENDPOINT="https://query1.finance.yahoo.com/v7/finance/quote?lang=en-US&region=US&corsDomain=finance.yahoo.com"
 
-: "${COLOR_BOLD:=\e[1;37m}"
-: "${COLOR_GREEN:=\e[32m}"
-: "${COLOR_RED:=\e[31m}"
-: "${COLOR_RESET:=\e[00m}"
+if [[ $TERM ]]; then
+  : "${COLOR_BOLD:=$(tput bold)}"
+  : "${COLOR_GREEN:=$(tput setaf 2)}"
+  : "${COLOR_RED:=$(tput setaf 1)}"
+  : "${COLOR_RESET:=$(tput sgr0)}"
+fi
 
 symbols=$(IFS=,; echo "${SYMBOLS[*]}")
 fields=$(IFS=,; echo "${FIELDS[*]}")
