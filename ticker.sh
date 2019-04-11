@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-LANG=en_US.UTF-8
-LC_NUMERIC=en_US.UTF-8
+LANG=C
+LC_NUMERIC=C
 
 SYMBOLS=("$@")
 
