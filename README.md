@@ -40,6 +40,9 @@ $ NO_COLOR=1 ./ticker.sh AAPL
 $ watch -n 5 -t -c ./ticker.sh AAPL MSFT GOOG BTC-USD
 # Or if `watch` is not available:
 $ while true; do clear; ./ticker.sh AAPL MSFT GOOG BTC-USD; sleep 5; done
+# Or, to prevent the slow refresh
+tmp=$(mktemp)
+while true; do /usr/local/bin/ticker.sh AAPL MSFT GOOG BTC-USD > $tmp; clear; cat $tmp; sleep 5; done
 ```
 
 This script works well with [GeekTool](https://www.tynsoe.org/v2/geektool/) and similar software:
