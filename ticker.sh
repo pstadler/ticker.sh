@@ -38,6 +38,9 @@ query () {
 }
 
 for symbol in $(IFS=' '; echo "${SYMBOLS[*]}"); do
+  # Uppercase the symbol
+  symbol=${symbol^^}
+  
   marketState="$(query $symbol 'marketState')"
 
   if [ -z $marketState ]; then
