@@ -37,7 +37,7 @@ query () {
   echo $results | jq -r ".[] | select(.symbol == \"$1\") | .$2"
 }
 
-for symbol in $(IFS=' '; echo "${SYMBOLS[*]}"); do
+for symbol in $(IFS=' '; echo "${SYMBOLS[*]}" | tr '[:lower:]' '[:upper:]'); do
   marketState="$(query $symbol 'marketState')"
 
   if [ -z $marketState ]; then
