@@ -78,7 +78,7 @@ for symbol in $(IFS=' '; echo "${SYMBOLS[*]}" | tr '[:lower:]' '[:upper:]'); do
   fi
 
   if [ "$price" != "null" ]; then
-    printf "%-10s$COLOR_BOLD%8.2f$COLOR_RESET" $symbol $price
+    printf "%-10s$COLOR_BOLD%8.5g$COLOR_RESET" $symbol $price
     printf "$color%10.2f%12s$COLOR_RESET" $diff $(printf "(%.2f%%)" $percent)
     printf " %s\n" "$nonRegularMarketSign"
   fi
