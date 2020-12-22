@@ -21,10 +21,10 @@ Make sure to install [jq](https://stedolan.github.io/jq/), a versatile command-l
 $ ./ticker.sh AAPL
 
 # Multiple symbols:
-$ ./ticker.sh AAPL MSFT GOOG BTC-USD
+$ ./ticker.sh AAPL MSFT GOOG ^SPX BTC-USD EURUSD=X
 
 # Read from file:
-$ echo "AAPL MSFT GOOG BTC-USD" > ~/.ticker.conf
+$ echo "AAPL MSFT GOOG ^SPX BTC-USD EURUSD=X" > ~/.ticker.conf
 $ ./ticker.sh $(cat ~/.ticker.conf)
 
 # Use different colors:
@@ -37,14 +37,14 @@ $ COLOR_BOLD="\e[38;5;248m" \
 $ NO_COLOR=1 ./ticker.sh AAPL
 
 # Update every five seconds:
-$ watch -n 5 -t -c ./ticker.sh AAPL MSFT GOOG BTC-USD
+$ watch -n 5 -t -c ./ticker.sh AAPL MSFT GOOG ^SPX BTC-USD EURUSD=X
 # Or if `watch` is not available:
-$ while true; do clear; ./ticker.sh AAPL MSFT GOOG BTC-USD; sleep 5; done
+$ while true; do clear; ./ticker.sh AAPL MSFT GOOG ^SPX BTC-USD EURUSD=X; sleep 5; done
 ```
 
 This script works well with [GeekTool](https://www.tynsoe.org/v2/geektool/) and similar software:
 
 ```sh
 PATH=/usr/local/bin:$PATH # make sure to include the path where jq is located
-~/GitHub/ticker.sh/ticker.sh AAPL MSFT GOOG BTC-USD
+~/GitHub/ticker.sh/ticker.sh AAPL MSFT GOOG ^SPX BTC-USD EURUSD=X
 ```
