@@ -69,7 +69,7 @@ for symbol in $(IFS=' '; echo "${SYMBOLS[*]}" | tr '[:lower:]' '[:upper:]'); do
     percent=$(query $symbol 'regularMarketChangePercent')
   fi
 
-  if [ "$diff" == "0" ]; then
+  if [ "$diff" == "0" ] || [ "$diff" == "0.0" ]; then
     color=
   elif ( echo "$diff" | grep -q ^- ); then
     color=$COLOR_RED
