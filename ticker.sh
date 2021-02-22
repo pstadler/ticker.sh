@@ -37,6 +37,10 @@ query () {
   echo $results | jq -r ".[] | select(.symbol == \"$1\") | .$2"
 }
 
+if $(type date > /dev/null 2>&1); then
+  date
+fi
+
 for symbol in $(IFS=' '; echo "${SYMBOLS[*]}" | tr '[:lower:]' '[:upper:]'); do
   marketState="$(query $symbol 'marketState')"
 
