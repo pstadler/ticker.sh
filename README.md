@@ -42,7 +42,7 @@ $ watch -n 5 -t -c ./ticker.sh AAPL MSFT GOOG BTC-USD
 $ while true; do clear; ./ticker.sh AAPL MSFT GOOG BTC-USD; sleep 5; done
 ```
 
-This script works well with [GeekTool](https://www.tynsoe.org/v2/geektool/) and similar software:
+This script works well with [GeekTool](https://www.tynsoe.org/geektool/) and similar software:
 
 ```sh
 PATH=/usr/local/bin:$PATH # make sure to include the path where jq is located
