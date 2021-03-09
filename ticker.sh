@@ -6,6 +6,13 @@ LC_NUMERIC=C
 
 SYMBOLS=("$@")
 
+# .ticker.conf always takes precedence.
+CONF_PATH="$HOME/.ticker.conf"
+if [ -s $CONF_PATH ]
+then 
+    SYMBOLS=($(<$CONF_PATH))
+fi
+
 if ! $(type jq > /dev/null 2>&1); then
   echo "'jq' is not in the PATH. (See: https://stedolan.github.io/jq/)"
   exit 1

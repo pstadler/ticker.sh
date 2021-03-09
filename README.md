@@ -25,7 +25,7 @@ $ ./ticker.sh AAPL MSFT GOOG BTC-USD
 
 # Read from file:
 $ echo "AAPL MSFT GOOG BTC-USD" > ~/.ticker.conf
-$ ./ticker.sh $(cat ~/.ticker.conf)
+$ ./ticker.sh 
 
 # Use different colors:
 $ COLOR_BOLD="\e[38;5;248m" \
