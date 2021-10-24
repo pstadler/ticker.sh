@@ -14,6 +14,13 @@ $ curl -o ticker.sh https://raw.githubusercontent.com/pstadler/ticker.sh/master/
 
 Make sure to install [jq](https://stedolan.github.io/jq/), a versatile command-line JSON processor.
 
+## Install JQ
+```
+$ curl -L https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 -o /usr/local/bin/jq 
+$ chmod a+x /usr/local/bin/jq 
+$ jq -V
+```
+
 ## Usage
 
 ```sh
