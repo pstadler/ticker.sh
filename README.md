@@ -42,6 +42,8 @@ $ watch -n 5 -t -c ./ticker.sh AAPL MSFT GOOG BTC-USD
 $ while true; do clear; ./ticker.sh AAPL MSFT GOOG BTC-USD; sleep 5; done
 ```
 
+Please note that ticker.sh may require periodic updates of its session with Yahoo Finance. During these instances, the script may take slightly longer to complete.
+
 This script works well with [GeekTool](https://www.tynsoe.org/geektool/) and similar software:
 
 ```sh
