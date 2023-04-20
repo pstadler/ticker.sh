@@ -4,7 +4,8 @@ set -e
 LANG=C
 LC_NUMERIC=C
 
-SESSION_DIR="${TMPDIR}pstadler-ticker-sh"
+: ${TMPDIR:=/tmp}
+SESSION_DIR="${TMPDIR%/}/ticker.sh-$(whoami)"
 COOKIE_FILE="${SESSION_DIR}/cookies.txt"
 CRUMB_FILE="${SESSION_DIR}/crumb.txt"
 
@@ -34,7 +35,7 @@ fi
 symbols=$(IFS=,; echo "${SYMBOLS[*]}")
 fields=$(IFS=,; echo "${FIELDS[*]}")
 
-[ ! -d "$SESSION_DIR" ] && mktemp -q -d "$SESSION_DIR"
+[ ! -d "$SESSION_DIR" ] && mkdir -m 700 "$SESSION_DIR"
 
 preflight () {
   curl --silent --output /dev/null --cookie-jar "$COOKIE_FILE" "https://finance.yahoo.com" \
