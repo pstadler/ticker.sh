@@ -4,6 +4,10 @@ set -e
 LANG=C
 LC_NUMERIC=C
 
+SESSION_DIR="${TMPDIR}pstadler-ticker-sh"
+COOKIE_FILE="${SESSION_DIR}/cookies.txt"
+CRUMB_FILE="${SESSION_DIR}/crumb.txt"
+
 SYMBOLS=("$@")
 
 if ! $(type jq > /dev/null 2>&1); then
@@ -30,8 +34,27 @@ fi
 symbols=$(IFS=,; echo "${SYMBOLS[*]}")
 fields=$(IFS=,; echo "${FIELDS[*]}")
 
-results=$(curl --silent "$API_ENDPOINT&fields=$fields&symbols=$symbols" \
-  | jq '.quoteResponse .result')
+[ ! -d "$SESSION_DIR" ] && mktemp -q -d "$SESSION_DIR"
+
+preflight () {
+  curl --silent --output /dev/null --cookie-jar "$COOKIE_FILE" "https://finance.yahoo.com" \
+  -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"
+  curl --silent -b "$COOKIE_FILE" "https://query1.finance.yahoo.com/v1/test/getcrumb" \
+    > "$CRUMB_FILE"
+}
+
+fetch_quotes () {
+  curl --silent -b "$COOKIE_FILE" "$API_ENDPOINT&fields=$fields&symbols=$symbols&crumb=$(cat "$CRUMB_FILE")"
+}
+
+[ ! -f "$COOKIE_FILE" -o ! -f "$CRUMB_FILE" ] && preflight
+results=$(fetch_quotes)
+if $(echo "$results" | grep -q '"code":"Unauthorized"'); then
+  preflight
+  results=$(fetch_quotes)
+fi
+
+results=$(echo $results | jq '.quoteResponse .result')
 
 query () {
   echo $results | jq -r ".[] | select(.symbol == \"$1\") | .$2"
