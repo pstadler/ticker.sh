@@ -23,7 +23,7 @@ fi
 
 FIELDS=(symbol marketState regularMarketPrice regularMarketChange regularMarketChangePercent \
   preMarketPrice preMarketChange preMarketChangePercent postMarketPrice postMarketChange postMarketChangePercent)
-API_ENDPOINT="https://query1.finance.yahoo.com/v6/finance/quote?lang=en-US&region=US&corsDomain=finance.yahoo.com"
+API_ENDPOINT="https://query1.finance.yahoo.com/v7/finance/quote?lang=en-US&region=US&corsDomain=finance.yahoo.com"
 
 if [ -z "$NO_COLOR" ]; then
   : "${COLOR_BOLD:=\e[1;37m}"
