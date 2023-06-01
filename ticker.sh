@@ -72,7 +72,7 @@ for symbol in $(IFS=' '; echo "${SYMBOLS[*]}" | tr '[:lower:]' '[:upper:]'); do
   preMarketChange="$(query $symbol 'preMarketChange')"
   postMarketChange="$(query $symbol 'postMarketChange')"
 
-  if [ $marketState == "PRE" ] \
+  if [ $marketState = "PRE" ] \
     && [ $preMarketChange != "0" ] \
     && [ $preMarketChange != "null" ]; then
     nonRegularMarketSign='*'
@@ -93,7 +93,11 @@ for symbol in $(IFS=' '; echo "${SYMBOLS[*]}" | tr '[:lower:]' '[:upper:]'); do
     percent=$(query $symbol 'regularMarketChangePercent')
   fi
 
-  if [ "$diff" == "0" ] || [ "$diff" == "0.0" ]; then
+  # see https://github.com/pstadler/ticker.sh/issues/40
+  [ "$diff" = "null" ] && diff="0.0"
+  [ "$percent" = "null" ] && percent="0.0"
+
+  if [ "$diff" = "0" ] || [ "$diff" = "0.0" ]; then
     color=
   elif ( echo "$diff" | grep -q ^- ); then
     color=$COLOR_RED
