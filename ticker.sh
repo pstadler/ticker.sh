@@ -38,7 +38,8 @@ fields=$(IFS=,; echo "${FIELDS[*]}")
 [ ! -d "$SESSION_DIR" ] && mkdir -m 700 "$SESSION_DIR"
 
 preflight () {
-  curl --silent --output /dev/null --cookie-jar "$COOKIE_FILE" "https://finance.yahoo.com" \
+  # rather than "finance", use the "fc" subdomain which doesn't redirect to a consent page
+  curl --silent --output /dev/null --cookie-jar "$COOKIE_FILE" "https://fc.yahoo.com" \
   -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"
   curl --silent -b "$COOKIE_FILE" "https://query1.finance.yahoo.com/v1/test/getcrumb" \
     > "$CRUMB_FILE"
