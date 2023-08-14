@@ -56,7 +56,7 @@ for symbol in "${SYMBOLS[@]}"; do
     color=$'\e[31m'
   fi
 
-  printf "%s%-8s%8s%10.2f%8s%6.2f%%%s\n" \
+  printf "%s%-10s%8s%10.2f%8s%6.2f%%%s\n" \
     "$color" "$symbol" \
     "$currentPrice" "$priceChange" "$color" "$percentChange" \
     $'\e[0m'
