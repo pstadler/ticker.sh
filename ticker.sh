@@ -19,6 +19,16 @@ fi
 
 SYMBOLS=("$@")
 
+if ! $(type jq > /dev/null 2>&1); then
+  echo "'jq' is not in the PATH. (See: https://stedolan.github.io/jq/)"
+  exit 1
+fi
+
+if [ -z "$SYMBOLS" ]; then
+  echo "Usage: ./ticker.sh AAPL MSFT GOOG BTC-USD"
+  exit
+fi
+
 preflight () {
   curl --silent --output /dev/null --cookie-jar "$COOKIE_FILE" "https://finance.yahoo.com" \
     -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"
