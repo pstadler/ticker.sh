@@ -29,6 +29,8 @@ if [ -z "$SYMBOLS" ]; then
   exit
 fi
 
+[ ! -d "$SESSION_DIR" ] && mkdir -m 700 "$SESSION_DIR"
+
 preflight () {
   curl --silent --output /dev/null --cookie-jar "$COOKIE_FILE" "https://finance.yahoo.com" \
     -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"
