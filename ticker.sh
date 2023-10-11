@@ -24,6 +24,11 @@ if ! $(type jq > /dev/null 2>&1); then
   exit 1
 fi
 
+if ! $(type jq > /dev/null 2>&1); then
+  echo "'bc' is not in the PATH. (See: https://www.gnu.org/software/bc/)"
+  exit 1
+fi
+
 if [ -z "$SYMBOLS" ]; then
   echo "Usage: ./ticker.sh AAPL MSFT GOOG BTC-USD"
   exit
@@ -44,8 +49,6 @@ fetch_chart () {
 
 [ ! -f "$COOKIE_FILE" ] && preflight
 
-# printf "%-10s %12s %10s %10s\n" "Symbol" "Price" "Change" "Change (%)"
-
 for symbol in "${SYMBOLS[@]}"; do
   results=$(fetch_chart "$symbol")
 
@@ -54,8 +57,8 @@ for symbol in "${SYMBOLS[@]}"; do
   currency=$(echo "$results" | jq -r '.chart.result[0].meta.currency')
   symbol=$(echo "$results" | jq -r '.chart.result[0].meta.symbol')
 
-  priceChange=$(python -c "print('{:.2f}'.format($currentPrice - $previousClose))")
-  percentChange=$(python -c "print('{:.2f}'.format(($currentPrice - $previousClose) / $previousClose * 100))")
+  priceChange=$(printf "%.2f" $(echo "scale=2; $currentPrice - $previousClose" | bc))
+  percentChange=$(printf "%.2f" $(echo "scale=2; (($currentPrice - $previousClose) / $previousClose) * 100" | bc))
 
   if (( $(echo "$priceChange >= 0" | bc -l) )); then
     color="$COLOR_GREEN"
