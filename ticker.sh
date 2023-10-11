@@ -24,7 +24,8 @@ if ! $(type jq > /dev/null 2>&1); then
   exit 1
 fi
 
-if ! $(type jq > /dev/null 2>&1); then
+# Adding bc check for colors correct. Thank you @milanico2309
+if ! $(type bc > /dev/null 2>&1); then
   echo "'bc' is not in the PATH. (See: https://www.gnu.org/software/bc/)"
   exit 1
 fi
@@ -57,8 +58,8 @@ for symbol in "${SYMBOLS[@]}"; do
   currency=$(echo "$results" | jq -r '.chart.result[0].meta.currency')
   symbol=$(echo "$results" | jq -r '.chart.result[0].meta.symbol')
 
-  priceChange=$(printf "%.2f" $(echo "scale=2; $currentPrice - $previousClose" | bc))
-  percentChange=$(printf "%.2f" $(echo "scale=2; (($currentPrice - $previousClose) / $previousClose) * 100" | bc))
+  priceChange=$(awk -v currentPrice="$currentPrice" -v previousClose="$previousClose" 'BEGIN {printf "%.2f", currentPrice - previousClose}')
+  percentChange=$(awk -v currentPrice="$currentPrice" -v previousClose="$previousClose" 'BEGIN {printf "%.2f", ((currentPrice - previousClose) / previousClose) * 100}')
 
   if (( $(echo "$priceChange >= 0" | bc -l) )); then
     color="$COLOR_GREEN"
@@ -72,7 +73,6 @@ for symbol in "${SYMBOLS[@]}"; do
       "$currentPrice" "$priceChange" "$color" "$percentChange" \
       "$COLOR_RESET"
   else
-    # printf "%-10s%8.2f%10.2f%8s%6.2f%%\n" \
     printf "%-10s%8.2f%10.2f%9.2f%%\n" \
       "$symbol" \
       "$currentPrice" "$priceChange" "$percentChange"
