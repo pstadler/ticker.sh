@@ -50,7 +50,12 @@ fetch_chart () {
 
 [ ! -f "$COOKIE_FILE" ] && preflight
 
+# Initialize an array to hold background process IDs
+pids=()
+
 for symbol in "${SYMBOLS[@]}"; do
+ (
+  # Running in subshell 
   results=$(fetch_chart "$symbol")
 
   currentPrice=$(echo "$results" | jq -r '.chart.result[0].meta.regularMarketPrice')
@@ -76,6 +81,15 @@ for symbol in "${SYMBOLS[@]}"; do
     printf "%-10s%8.2f%10.2f%9.2f%%\n" \
       "$symbol" \
       "$currentPrice" "$priceChange" "$percentChange"
-  fi
+  fi 
+ ) &
 
+ # Stack PIDs
+ pids+=($!)
+
+done
+
+# Wait for all background processes to finish
+for pid in "${pids[@]}"; do
+  wait "$pid"
 done
