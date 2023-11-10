@@ -63,6 +63,9 @@ for symbol in "${SYMBOLS[@]}"; do
   currency=$(echo "$results" | jq -r '.chart.result[0].meta.currency')
   symbol=$(echo "$results" | jq -r '.chart.result[0].meta.symbol')
 
+  # see https://github.com/pstadler/ticker.sh/issues/40
+  [ "$previousClose" = "null" ] && previousClose="1.0"
+
   priceChange=$(awk -v currentPrice="$currentPrice" -v previousClose="$previousClose" 'BEGIN {printf "%.2f", currentPrice - previousClose}')
   percentChange=$(awk -v currentPrice="$currentPrice" -v previousClose="$previousClose" 'BEGIN {printf "%.2f", ((currentPrice - previousClose) / previousClose) * 100}')
 
